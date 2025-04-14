@@ -1,0 +1,36 @@
+name: Test Template Wizard
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y bash
+
+      - name: Make test scripts executable
+        run: chmod +x tests/run_tests.sh tests/unit/*.sh tests/integration/*.sh tests/mock/*.sh
+
+      - name: Run unit tests
+        run: ./tests/run_tests.sh unit
+
+      - name: Run integration tests
+        run: ./tests/run_tests.sh integration
+
+      - name: Report test summary
+        run: |
+          echo "All tests completed"
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ All tests passed successfully!"
+          else
+            echo "❌ Some tests failed. Check logs for details."
+            exit 1
+          fi

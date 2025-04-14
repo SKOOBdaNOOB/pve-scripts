@@ -11,8 +11,9 @@ A modular, feature-rich tool for creating and managing VM templates in Proxmox V
 - **Batch Operations**: Create multiple templates or VMs in a single operation
 - **Resource Allocation Controls**: Fine-grained CPU and memory configuration
 - **Configuration Profiles**: Save and load named profiles for repeated use
-- **Robust Error Handling**: Detailed error messages and logging system
+- **Robust Error Handling**: Detailed error messages, input validation feedback, and recovery mechanisms
 - **Security Enhancements**: Secure configuration storage and SSH key management
+- **Automated Testing**: Comprehensive unit and integration test suite with CI/CD integration
 
 ## Prerequisites
 

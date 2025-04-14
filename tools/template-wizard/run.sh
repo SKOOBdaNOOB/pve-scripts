@@ -123,7 +123,8 @@ prompt_yes_no() {
     while true; do
         read -p "$prompt " response
         response=${response:-$default}
-        case "${response,,}" in
+        local response_lower=$(echo "$response" | tr '[:upper:]' '[:lower:]')
+        case "$response_lower" in
             y|yes) return 0 ;;
             n|no) return 1 ;;
             *) echo "Please answer yes or no." ;;
@@ -160,6 +161,8 @@ show_menu() {
     shift
     local options=("$@")
     local selection
+    local attempts=0
+    local max_attempts=5
 
     section_header "$title"
 
@@ -168,14 +171,33 @@ show_menu() {
     done
 
     echo ""
+    echo -e "${BLUE}(Enter a number from 1-${#options[@]}, or 'q' to go back)${RESET}"
+
     while true; do
+        if [[ $attempts -ge $max_attempts ]]; then
+            show_warning "Too many invalid attempts. Returning to previous menu..."
+            sleep 1
+            return 255  # Special return code to indicate max attempts reached
+        fi
+
         read -p "Enter selection [1-${#options[@]}]: " selection
 
+        # Check for exit command
+        local selection_lower=$(echo "$selection" | tr '[:upper:]' '[:lower:]')
+        if [[ "$selection_lower" == "q" || "$selection_lower" == "quit" || "$selection_lower" == "exit" ]]; then
+            show_info "Returning to previous menu..."
+            sleep 0.5
+            return 254  # Special return code to indicate user requested exit
+        fi
+
+        # Validate input
         if [[ "$selection" =~ ^[0-9]+$ ]] && [ "$selection" -ge 1 ] && [ "$selection" -le "${#options[@]}" ]; then
             MENU_SELECTION=$((selection-1))
-            return
+            return 0
         else
-            show_error "Invalid selection. Please try again."
+            ((attempts++))
+            show_error "Invalid selection. Please enter a number between 1 and ${#options[@]}."
+            sleep 0.5  # Short delay to prevent spam
         fi
     done
 }
@@ -1133,6 +1155,19 @@ main() {
         )
 
         show_menu "Select Option" "${main_options[@]}"
+        local menu_result=$?
+
+        # Handle special return codes
+        if [ $menu_result -eq 254 ]; then
+            # User requested to exit
+            section_header "Exiting"
+            show_info "Thank you for using the Proxmox VM Template Creation Wizard!"
+            exit 0
+        elif [ $menu_result -eq 255 ]; then
+            # Too many invalid attempts
+            show_error "Menu selection failed. Please restart the wizard."
+            exit 1
+        fi
 
         case $MENU_SELECTION in
             0) # Create new template

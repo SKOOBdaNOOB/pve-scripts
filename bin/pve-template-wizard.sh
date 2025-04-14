@@ -282,6 +282,19 @@ main() {
         )
 
         show_menu "Select Option" "${main_options[@]}"
+        local menu_result=$?
+
+        # Handle special return codes
+        if [ $menu_result -eq 254 ]; then
+            # User requested to exit
+            section_header "Exiting"
+            show_info "Thank you for using the Proxmox VM Template Creation Wizard!"
+            exit 0
+        elif [ $menu_result -eq 255 ]; then
+            # Too many invalid attempts
+            show_error "Menu selection failed. Please restart the wizard."
+            exit 1
+        fi
 
         case $MENU_SELECTION in
             0) # Create new template
