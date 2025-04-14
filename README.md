@@ -61,12 +61,35 @@ This will download and run the script without installing anything permanently.
 3. Configure storage, resources, network, and cloud-init settings
 4. Review settings and confirm to create the template
 
+Example:
+```bash
+# Run the wizard
+./bin/pve-template-wizard.sh
+
+# Select option 1 for "Create New Template"
+# Select Ubuntu 23.04 from the distribution list
+# Configure with 2 vCPUs, 2GB RAM, 20GB disk
+# Set cloud-init username and password
+# Review and confirm creation
+```
+
 ### Cloning from a Template
 
 1. Select "Clone from Template" from the main menu
 2. Choose a template from the list of available templates
 3. Enter a name for the new VM
 4. The VM will be created and started automatically
+
+Example:
+```bash
+# Run the wizard
+./bin/pve-template-wizard.sh
+
+# Select option 2 for "Clone from Template"
+# Select your template from the list
+# Enter "web-server-01" as the VM name
+# The new VM will be created from the template
+```
 
 ### Managing Templates
 
@@ -105,6 +128,10 @@ pve-scripts/
 ├── config/                        # Configuration file storage
 ├── docs/                          # Documentation
 └── tests/                         # Test files
+    ├── run_tests.sh               # Test runner script
+    ├── mock/                      # Mock functions for testing
+    ├── unit/                      # Unit tests
+    └── integration/               # Integration tests
 ```
 
 ## Configuration
@@ -128,3 +155,118 @@ The wizard automatically creates configuration files in the following locations:
 ## Advanced Features
 
 ### Custom Cloud-init Configuration
+
+The wizard allows for advanced cloud-init configuration, including:
+
+- Custom user data scripts
+- SSH key management
+- Network configuration
+- Package installation
+- Service configuration
+
+To use custom cloud-init configuration:
+
+1. Select "Create New Template" or "Modify Template"
+2. Navigate to the cloud-init configuration section
+3. Choose "Advanced Configuration"
+4. Enter your custom cloud-init data or specify a file path
+
+### Resource Allocation Options
+
+Fine-grained control over VM resources:
+
+- CPU type selection (host, kvm64, etc.)
+- CPU flags (AES, AVX, etc.)
+- Memory management (ballooning, shares)
+- CPU pinning options
+- NUMA configuration
+
+### Network Configuration
+
+Advanced network setup options:
+
+- Multiple network interfaces
+- VLAN tagging
+- Bridge configuration
+- Firewall rule suggestions
+- Custom MAC addresses
+
+## Testing
+
+The project includes a comprehensive test suite:
+
+```bash
+# Run all tests
+./tests/run_tests.sh
+
+# Run only unit tests
+./tests/run_tests.sh unit
+
+# Run only integration tests
+./tests/run_tests.sh integration
+```
+
+## Troubleshooting
+
+### Common Issues
+
+- **Permission Denied**: Ensure you're running with sufficient privileges
+  ```bash
+  sudo ./bin/pve-template-wizard.sh
+  ```
+
+- **Missing Dependencies**: Install required packages
+  ```bash
+  apt-get install wget curl qemu-guest-agent
+  ```
+
+- **Download Errors**: Check your internet connection and ensure the Proxmox server can reach external sites
+
+- **Storage Issues**: Verify your storage pools are properly configured in Proxmox
+
+### Logs
+
+Check the logs for detailed error information:
+```bash
+cat $HOME/.pve-template-wizard/logs/wizard.log
+```
+
+## Contributing
+
+Contributions to the Proxmox VM Template Wizard are welcome! Please follow these guidelines:
+
+### Getting Started
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run the tests to ensure nothing broke (`./tests/run_tests.sh`)
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Code Standards
+
+- Follow the existing code style
+- Write descriptive commit messages
+- Update documentation for any new features
+- Add tests for new functionality
+- Check the template-wizard-improvements.md checklist for project priorities
+
+### Testing
+
+All code should be tested:
+
+1. Write unit tests for individual functions
+2. Add integration tests for new workflows
+3. Ensure all existing tests pass before submitting pull requests
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- The Proxmox community for inspiration and support
+- Contributors who have helped improve this tool
+- Open source projects that made this possible

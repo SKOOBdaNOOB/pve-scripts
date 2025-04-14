@@ -18,22 +18,69 @@ setup_mock_inputs() {
     MOCK_INPUT_INDEX=0
 }
 
+# Global timeout for tests to prevent hanging
+TEST_TIMEOUT=10  # seconds
+TEST_START_TIME=0
+TEST_TIMEOUT_ENABLED=false
+
+# Enable test timeout
+enable_test_timeout() {
+    TEST_TIMEOUT_ENABLED=true
+    TEST_START_TIME=$(date +%s)
+}
+
+# Check if test has timed out
+check_test_timeout() {
+    if [[ "$TEST_TIMEOUT_ENABLED" == "true" ]]; then
+        local current_time=$(date +%s)
+        local elapsed=$((current_time - TEST_START_TIME))
+
+        if [[ $elapsed -gt $TEST_TIMEOUT ]]; then
+            echo "TEST TIMEOUT: Test has been running for ${elapsed} seconds, exceeding limit of ${TEST_TIMEOUT} seconds."
+            exit 2  # Special exit code for timeout
+        fi
+    fi
+}
+
 # Mock read function for tests
 read() {
     local var_name=$1
+    local prompt=""
+    local timeout_arg=""
 
-    # Strip '-p' flag and prompt if present
-    if [[ "$1" == "-p" ]]; then
-        # The prompt is in $2, and the variable is in $3
-        var_name=$3
-        # We can echo the prompt to stdout to simulate the prompt
-        echo -ne "$2"
+    # Check for test timeout
+    check_test_timeout
+
+    # Parse read arguments
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -p)
+                prompt="$2"
+                shift 2
+                ;;
+            -t)
+                timeout_arg="$2"
+                shift 2
+                ;;
+            *)
+                var_name="$1"
+                shift
+                ;;
+        esac
+    done
+
+    # Echo the prompt if provided
+    if [[ -n "$prompt" ]]; then
+        echo -ne "$prompt"
     fi
 
     # Check if we have a mock input available
     if [ $MOCK_INPUT_INDEX -lt ${#MOCK_INPUTS[@]} ]; then
         local input="${MOCK_INPUTS[$MOCK_INPUT_INDEX]}"
         MOCK_INPUT_INDEX=$((MOCK_INPUT_INDEX + 1))
+
+        # For debugging
+        echo "DEBUG: Mock read providing input: '$input' (input $MOCK_INPUT_INDEX of ${#MOCK_INPUTS[@]})" >&2
 
         # Assign value to the provided variable
         if [[ -n "$var_name" ]]; then
@@ -44,8 +91,9 @@ read() {
         echo "$input"
         return 0
     else
-        echo "MOCK ERROR: No more mock inputs available."
-        return 1
+        echo "MOCK ERROR: No more mock inputs available. Script may be expecting more input than provided." >&2
+        # In test environment, automatically exit to prevent hanging
+        exit 3  # Special exit code for mock input exhaustion
     fi
 }
 
