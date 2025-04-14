@@ -23,9 +23,21 @@ A modular, feature-rich tool for creating and managing VM templates in Proxmox V
 
 ## Installation
 
+### Option 1: Quick Install (No Git Required)
+
+Run the following command on your Proxmox server:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/SKOOBdaNOOB/pve-scripts/main/bootstrap/template-wizard.sh | bash
+```
+
+This will download and run the script without installing anything permanently.
+
+### Option 2: Full Installation
+
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/pve-scripts.git
+   git clone https://github.com/SKOOBdaNOOB/pve-scripts.git
    cd pve-scripts
    ```
 
@@ -115,30 +127,3 @@ The wizard automatically creates configuration files in the following locations:
 ## Advanced Features
 
 ### Custom Cloud-init Configuration
-
-The wizard supports custom user-data and metadata for cloud-init, allowing you to configure VMs with custom initialization scripts.
-
-### Multiple Network Interfaces
-
-You can configure multiple network interfaces with different bridges, VLANs, and IP settings.
-
-### Storage Recommendations
-
-The wizard can recommend storage configurations based on the VM's intended purpose (database server, web server, etc.).
-
-### Firewall Configuration
-
-Configure firewall rules with preset security levels or custom port allowances.
-
-## Contributing
-
-Contributions are welcome! Please check the [template-wizard-improvements.md](template-wizard-improvements.md) file for planned enhancements and current progress.
-
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.

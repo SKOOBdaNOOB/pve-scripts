@@ -206,7 +206,7 @@ This document outlines a comprehensive plan for enhancing the Proxmox VM Templat
 
 - [ ] **Documentation**
   - [ ] Comprehensive user manual
-  - [ ] Quick start guide
+  - [x] Quick start guide
   - [ ] Administrator reference
   - [ ] FAQ section
 
