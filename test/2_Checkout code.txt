@@ -1,0 +1,145 @@
+﻿2025-04-14T05:20:21.2436885Z ##[group]Run actions/checkout@v3
+2025-04-14T05:20:21.2437765Z with:
+2025-04-14T05:20:21.2438164Z   repository: SKOOBdaNOOB/pve-scripts
+2025-04-14T05:20:21.2438847Z   token: ***
+2025-04-14T05:20:21.2439209Z   ssh-strict: true
+2025-04-14T05:20:21.2439610Z   persist-credentials: true
+2025-04-14T05:20:21.2440057Z   clean: true
+2025-04-14T05:20:21.2440444Z   sparse-checkout-cone-mode: true
+2025-04-14T05:20:21.2440906Z   fetch-depth: 1
+2025-04-14T05:20:21.2441276Z   fetch-tags: false
+2025-04-14T05:20:21.2441648Z   lfs: false
+2025-04-14T05:20:21.2442000Z   submodules: false
+2025-04-14T05:20:21.2442392Z   set-safe-directory: true
+2025-04-14T05:20:21.2443003Z ##[endgroup]
+2025-04-14T05:20:21.3906622Z Syncing repository: SKOOBdaNOOB/pve-scripts
+2025-04-14T05:20:21.3908652Z ##[group]Getting Git version info
+2025-04-14T05:20:21.3909368Z Working directory is '/home/runner/work/pve-scripts/pve-scripts'
+2025-04-14T05:20:21.3910312Z [command]/usr/bin/git version
+2025-04-14T05:20:21.3972486Z git version 2.49.0
+2025-04-14T05:20:21.4000976Z ##[endgroup]
+2025-04-14T05:20:21.4017571Z Temporarily overriding HOME='/home/runner/work/_temp/414d378f-4157-4ff5-8de8-4e160de5597b' before making global git config changes
+2025-04-14T05:20:21.4019063Z Adding repository directory to the temporary git global config as a safe directory
+2025-04-14T05:20:21.4021132Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/pve-scripts/pve-scripts
+2025-04-14T05:20:21.4056895Z Deleting the contents of '/home/runner/work/pve-scripts/pve-scripts'
+2025-04-14T05:20:21.4060599Z ##[group]Initializing the repository
+2025-04-14T05:20:21.4063828Z [command]/usr/bin/git init /home/runner/work/pve-scripts/pve-scripts
+2025-04-14T05:20:21.4143997Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-04-14T05:20:21.4145684Z hint: is subject to change. To configure the initial branch name to use in all
+2025-04-14T05:20:21.4147472Z hint: of your new repositories, which will suppress this warning, call:
+2025-04-14T05:20:21.4148711Z hint:
+2025-04-14T05:20:21.4149535Z hint: 	git config --global init.defaultBranch <name>
+2025-04-14T05:20:21.4150524Z hint:
+2025-04-14T05:20:21.4151501Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-04-14T05:20:21.4153014Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-04-14T05:20:21.4154587Z hint:
+2025-04-14T05:20:21.4155241Z hint: 	git branch -m <name>
+2025-04-14T05:20:21.4161777Z Initialized empty Git repository in /home/runner/work/pve-scripts/pve-scripts/.git/
+2025-04-14T05:20:21.4171437Z [command]/usr/bin/git remote add origin https://github.com/SKOOBdaNOOB/pve-scripts
+2025-04-14T05:20:21.4205025Z ##[endgroup]
+2025-04-14T05:20:21.4206365Z ##[group]Disabling automatic garbage collection
+2025-04-14T05:20:21.4207781Z [command]/usr/bin/git config --local gc.auto 0
+2025-04-14T05:20:21.4237302Z ##[endgroup]
+2025-04-14T05:20:21.4237973Z ##[group]Setting up auth
+2025-04-14T05:20:21.4242689Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-04-14T05:20:21.4270631Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-04-14T05:20:21.4554455Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-04-14T05:20:21.4583635Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-04-14T05:20:21.4812295Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-04-14T05:20:21.4845948Z ##[endgroup]
+2025-04-14T05:20:21.4847377Z ##[group]Fetching the repository
+2025-04-14T05:20:21.4855216Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +6e990d303090dbd6a8e2e2df026a779a74803978:refs/remotes/origin/main
+2025-04-14T05:20:22.0438143Z remote: Enumerating objects: 45, done.        
+2025-04-14T05:20:22.0439242Z remote: Counting objects:   2% (1/45)        
+2025-04-14T05:20:22.0440104Z remote: Counting objects:   4% (2/45)        
+2025-04-14T05:20:22.0440739Z remote: Counting objects:   6% (3/45)        
+2025-04-14T05:20:22.0441313Z remote: Counting objects:   8% (4/45)        
+2025-04-14T05:20:22.0441897Z remote: Counting objects:  11% (5/45)        
+2025-04-14T05:20:22.0442472Z remote: Counting objects:  13% (6/45)        
+2025-04-14T05:20:22.0443056Z remote: Counting objects:  15% (7/45)        
+2025-04-14T05:20:22.0443632Z remote: Counting objects:  17% (8/45)        
+2025-04-14T05:20:22.0444194Z remote: Counting objects:  20% (9/45)        
+2025-04-14T05:20:22.0444754Z remote: Counting objects:  22% (10/45)        
+2025-04-14T05:20:22.0445313Z remote: Counting objects:  24% (11/45)        
+2025-04-14T05:20:22.0445873Z remote: Counting objects:  26% (12/45)        
+2025-04-14T05:20:22.0446441Z remote: Counting objects:  28% (13/45)        
+2025-04-14T05:20:22.0447267Z remote: Counting objects:  31% (14/45)        
+2025-04-14T05:20:22.0447911Z remote: Counting objects:  33% (15/45)        
+2025-04-14T05:20:22.0448466Z remote: Counting objects:  35% (16/45)        
+2025-04-14T05:20:22.0449060Z remote: Counting objects:  37% (17/45)        
+2025-04-14T05:20:22.0449610Z remote: Counting objects:  40% (18/45)        
+2025-04-14T05:20:22.0450170Z remote: Counting objects:  42% (19/45)        
+2025-04-14T05:20:22.0450726Z remote: Counting objects:  44% (20/45)        
+2025-04-14T05:20:22.0451286Z remote: Counting objects:  46% (21/45)        
+2025-04-14T05:20:22.0451844Z remote: Counting objects:  48% (22/45)        
+2025-04-14T05:20:22.0452404Z remote: Counting objects:  51% (23/45)        
+2025-04-14T05:20:22.0452961Z remote: Counting objects:  53% (24/45)        
+2025-04-14T05:20:22.0453517Z remote: Counting objects:  55% (25/45)        
+2025-04-14T05:20:22.0454114Z remote: Counting objects:  57% (26/45)        
+2025-04-14T05:20:22.0454661Z remote: Counting objects:  60% (27/45)        
+2025-04-14T05:20:22.0455216Z remote: Counting objects:  62% (28/45)        
+2025-04-14T05:20:22.0455771Z remote: Counting objects:  64% (29/45)        
+2025-04-14T05:20:22.0456639Z remote: Counting objects:  66% (30/45)        
+2025-04-14T05:20:22.0457398Z remote: Counting objects:  68% (31/45)        
+2025-04-14T05:20:22.0457954Z remote: Counting objects:  71% (32/45)        
+2025-04-14T05:20:22.0458504Z remote: Counting objects:  73% (33/45)        
+2025-04-14T05:20:22.0459077Z remote: Counting objects:  75% (34/45)        
+2025-04-14T05:20:22.0459617Z remote: Counting objects:  77% (35/45)        
+2025-04-14T05:20:22.0460163Z remote: Counting objects:  80% (36/45)        
+2025-04-14T05:20:22.0460705Z remote: Counting objects:  82% (37/45)        
+2025-04-14T05:20:22.0461245Z remote: Counting objects:  84% (38/45)        
+2025-04-14T05:20:22.0461793Z remote: Counting objects:  86% (39/45)        
+2025-04-14T05:20:22.0462338Z remote: Counting objects:  88% (40/45)        
+2025-04-14T05:20:22.0462885Z remote: Counting objects:  91% (41/45)        
+2025-04-14T05:20:22.0463436Z remote: Counting objects:  93% (42/45)        
+2025-04-14T05:20:22.0463984Z remote: Counting objects:  95% (43/45)        
+2025-04-14T05:20:22.0464535Z remote: Counting objects:  97% (44/45)        
+2025-04-14T05:20:22.0465077Z remote: Counting objects: 100% (45/45)        
+2025-04-14T05:20:22.0465663Z remote: Counting objects: 100% (45/45), done.        
+2025-04-14T05:20:22.0466259Z remote: Compressing objects:   3% (1/33)        
+2025-04-14T05:20:22.0466997Z remote: Compressing objects:   6% (2/33)        
+2025-04-14T05:20:22.0467586Z remote: Compressing objects:   9% (3/33)        
+2025-04-14T05:20:22.0468156Z remote: Compressing objects:  12% (4/33)        
+2025-04-14T05:20:22.0468713Z remote: Compressing objects:  15% (5/33)        
+2025-04-14T05:20:22.0469286Z remote: Compressing objects:  18% (6/33)        
+2025-04-14T05:20:22.0470017Z remote: Compressing objects:  21% (7/33)        
+2025-04-14T05:20:22.0510437Z remote: Compressing objects:  24% (8/33)        
+2025-04-14T05:20:22.0512355Z remote: Compressing objects:  27% (9/33)        
+2025-04-14T05:20:22.0513111Z remote: Compressing objects:  30% (10/33)        
+2025-04-14T05:20:22.0513856Z remote: Compressing objects:  33% (11/33)        
+2025-04-14T05:20:22.0514589Z remote: Compressing objects:  36% (12/33)        
+2025-04-14T05:20:22.0515160Z remote: Compressing objects:  39% (13/33)        
+2025-04-14T05:20:22.0515736Z remote: Compressing objects:  42% (14/33)        
+2025-04-14T05:20:22.0516309Z remote: Compressing objects:  45% (15/33)        
+2025-04-14T05:20:22.0517087Z remote: Compressing objects:  48% (16/33)        
+2025-04-14T05:20:22.0517666Z remote: Compressing objects:  51% (17/33)        
+2025-04-14T05:20:22.0518246Z remote: Compressing objects:  54% (18/33)        
+2025-04-14T05:20:22.0518825Z remote: Compressing objects:  57% (19/33)        
+2025-04-14T05:20:22.0519407Z remote: Compressing objects:  60% (20/33)        
+2025-04-14T05:20:22.0519987Z remote: Compressing objects:  63% (21/33)        
+2025-04-14T05:20:22.0520561Z remote: Compressing objects:  66% (22/33)        
+2025-04-14T05:20:22.0521142Z remote: Compressing objects:  69% (23/33)        
+2025-04-14T05:20:22.0521740Z remote: Compressing objects:  72% (24/33)        
+2025-04-14T05:20:22.0522365Z remote: Compressing objects:  75% (25/33)        
+2025-04-14T05:20:22.0522949Z remote: Compressing objects:  78% (26/33)        
+2025-04-14T05:20:22.0523523Z remote: Compressing objects:  81% (27/33)        
+2025-04-14T05:20:22.0524097Z remote: Compressing objects:  84% (28/33)        
+2025-04-14T05:20:22.0524666Z remote: Compressing objects:  87% (29/33)        
+2025-04-14T05:20:22.0525236Z remote: Compressing objects:  90% (30/33)        
+2025-04-14T05:20:22.0525807Z remote: Compressing objects:  93% (31/33)        
+2025-04-14T05:20:22.0526395Z remote: Compressing objects:  96% (32/33)        
+2025-04-14T05:20:22.0527095Z remote: Compressing objects: 100% (33/33)        
+2025-04-14T05:20:22.0527705Z remote: Compressing objects: 100% (33/33), done.        
+2025-04-14T05:20:22.0884106Z remote: Total 45 (delta 3), reused 35 (delta 1), pack-reused 0 (from 0)        
+2025-04-14T05:20:22.0968423Z From https://github.com/SKOOBdaNOOB/pve-scripts
+2025-04-14T05:20:22.0969478Z  * [new ref]         6e990d303090dbd6a8e2e2df026a779a74803978 -> origin/main
+2025-04-14T05:20:22.1018865Z ##[endgroup]
+2025-04-14T05:20:22.1020076Z ##[group]Determining the checkout info
+2025-04-14T05:20:22.1021547Z ##[endgroup]
+2025-04-14T05:20:22.1022838Z ##[group]Checking out the ref
+2025-04-14T05:20:22.1026878Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-04-14T05:20:22.1098667Z Switched to a new branch 'main'
+2025-04-14T05:20:22.1101498Z branch 'main' set up to track 'origin/main'.
+2025-04-14T05:20:22.1107881Z ##[endgroup]
+2025-04-14T05:20:22.1141688Z [command]/usr/bin/git log -1 --format='%H'
+2025-04-14T05:20:22.1163571Z '6e990d303090dbd6a8e2e2df026a779a74803978'

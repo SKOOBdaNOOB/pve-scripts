@@ -1,152 +1,164 @@
 #!/bin/bash
 #
-# Simple Verification Script
-# Validates the basic structure and functionality of the project
+# Simple verification test for piped input handling
+# Tests that the UI functions correctly handle stdin when piped
 #
 
-# Set script path
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_DIR="$(dirname "$SCRIPT_DIR")"
-COLOR_GREEN="\033[32m"
-COLOR_RED="\033[31m"
-COLOR_RESET="\033[0m"
+# Current directory
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(dirname "$CURRENT_DIR")"
 
-echo "Running simple verification tests..."
+# Output test file
+TEST_OUTPUT="/tmp/pve-script-test-output.txt"
 
-# Check if main files exist
-echo -e "\nChecking critical files:"
-critical_files=(
-  "bin/pve-template-wizard.sh"
-  "lib/core/ui.sh"
-  "lib/core/logging.sh"
-  "lib/core/config.sh"
-  "lib/core/validation.sh"
-  "lib/distributions/distro_info.sh"
-  "lib/storage/storage.sh"
-  "lib/network/network.sh"
-  "lib/vm/vm.sh"
-)
+# Function to verify menu selection works via pipe
+test_piped_menu_selection() {
+    echo "Testing menu selection via pipe..."
 
-all_files_present=true
-for file in "${critical_files[@]}"; do
-  if [ -f "$REPO_DIR/$file" ]; then
-    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET} $file exists"
-  else
-    echo -e "  ${COLOR_RED}✗${COLOR_RESET} $file missing"
-    all_files_present=false
-  fi
-done
+    # Create a script that uses the UI menu selection
+    cat > /tmp/test_menu.sh << 'EOF'
+#!/bin/bash
+source "$(dirname "$0")/lib/core/ui.sh"
 
-# Check if files are executable
-echo -e "\nChecking executable permissions:"
-executables=(
-  "bin/pve-template-wizard.sh"
-  "tests/run_tests.sh"
-)
+show_header
+section_header "Testing Piped Input"
 
-all_executables_ok=true
-for file in "${executables[@]}"; do
-  if [ -x "$REPO_DIR/$file" ]; then
-    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET} $file is executable"
-  else
-    echo -e "  ${COLOR_RED}✗${COLOR_RESET} $file lacks executable permissions"
-    all_executables_ok=false
-  fi
-done
+# Simple menu test
+options=("Option 1" "Option 2" "Option 3")
+show_menu "Test Menu" "${options[@]}"
+echo "You selected: ${options[$MENU_SELECTION]}"
 
-# Check for required functions in core modules
-echo -e "\nChecking core functionality:"
-function check_for_function() {
-  local file=$1
-  local function_name=$2
+echo "Test completed successfully!"
+EOF
 
-  # Check for both function declaration styles:
-  # 1. With "function" keyword: function show_menu() { ... }
-  # 2. Without "function" keyword: show_menu() { ... }
-  if grep -q -E "(function $function_name|$function_name\(\))" "$REPO_DIR/$file"; then
-    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET} $function_name present in $file"
-    return 0
-  else
-    echo -e "  ${COLOR_RED}✗${COLOR_RESET} $function_name missing from $file"
-    return 1
-  fi
+    chmod +x /tmp/test_menu.sh
+
+    # Run the script with echo piping input "2" to it
+    echo "2" | /tmp/test_menu.sh > "$TEST_OUTPUT" 2>&1
+
+    # Check if the output contains the success message
+    if grep -q "You selected: Option 2" "$TEST_OUTPUT" && grep -q "Test completed successfully" "$TEST_OUTPUT"; then
+        echo "✅ Menu selection via pipe test passed!"
+        return 0
+    else
+        echo "❌ Menu selection via pipe test failed!"
+        echo "Output:"
+        cat "$TEST_OUTPUT"
+        return 1
+    fi
 }
 
-all_functions_present=true
-# Check key functions
-check_for_function "lib/core/ui.sh" "show_menu" || all_functions_present=false
-check_for_function "lib/core/logging.sh" "init_logging" || all_functions_present=false
-check_for_function "lib/core/validation.sh" "validate_ipv4" || all_functions_present=false
-check_for_function "lib/vm/vm.sh" "create_vm" || all_functions_present=false
+# Function to verify yes/no prompt works via pipe
+test_piped_yes_no() {
+    echo "Testing yes/no prompt via pipe..."
 
-# Check test framework
-echo -e "\nVerifying test framework:"
-test_framework_ok=true
+    # Create a script that uses the yes/no prompt
+    cat > /tmp/test_yes_no.sh << 'EOF'
+#!/bin/bash
+source "$(dirname "$0")/lib/core/ui.sh"
 
-if [ -d "$REPO_DIR/tests/unit" ] && [ -d "$REPO_DIR/tests/integration" ]; then
-  echo -e "  ${COLOR_GREEN}✓${COLOR_RESET} Test directories exist"
+show_header
+section_header "Testing Piped Input"
+
+# Simple yes/no test
+if prompt_yes_no "Do you want to continue?" "Y"; then
+    echo "User said YES"
 else
-  echo -e "  ${COLOR_RED}✗${COLOR_RESET} Test directories missing"
-  test_framework_ok=false
+    echo "User said NO"
 fi
 
-# Check documentation
-echo -e "\nVerifying documentation:"
-docs_ok=true
+echo "Test completed successfully!"
+EOF
 
-if [ -f "$REPO_DIR/README.md" ] && [ -f "$REPO_DIR/CONTRIBUTING.md" ]; then
-  echo -e "  ${COLOR_GREEN}✓${COLOR_RESET} Documentation files present"
-else
-  echo -e "  ${COLOR_RED}✗${COLOR_RESET} Documentation files missing"
-  docs_ok=false
-fi
+    chmod +x /tmp/test_yes_no.sh
 
-# Final summary
-echo -e "\n-------------------------------------"
-echo -e "          Verification Summary       "
-echo -e "-------------------------------------"
+    # Run the script with echo piping input "n" to it
+    echo "n" | /tmp/test_yes_no.sh > "$TEST_OUTPUT" 2>&1
 
-all_tests_passed=true
-if $all_files_present; then
-  echo -e "${COLOR_GREEN}✓${COLOR_RESET} All critical files present"
-else
-  echo -e "${COLOR_RED}✗${COLOR_RESET} Some critical files missing"
-  all_tests_passed=false
-fi
+    # Check if the output contains the success message
+    if grep -q "User said NO" "$TEST_OUTPUT" && grep -q "Test completed successfully" "$TEST_OUTPUT"; then
+        echo "✅ Yes/No prompt via pipe test passed!"
+        return 0
+    else
+        echo "❌ Yes/No prompt via pipe test failed!"
+        echo "Output:"
+        cat "$TEST_OUTPUT"
+        return 1
+    fi
+}
 
-if $all_executables_ok; then
-  echo -e "${COLOR_GREEN}✓${COLOR_RESET} All executables have correct permissions"
-else
-  echo -e "${COLOR_RED}✗${COLOR_RESET} Some executables lack proper permissions"
-  all_tests_passed=false
-fi
+# Function to verify value prompt works via pipe
+test_piped_value() {
+    echo "Testing value prompt via pipe..."
 
-if $all_functions_present; then
-  echo -e "${COLOR_GREEN}✓${COLOR_RESET} All core functions detected"
-else
-  echo -e "${COLOR_RED}✗${COLOR_RESET} Some core functions missing"
-  all_tests_passed=false
-fi
+    # Create a script that uses the value prompt
+    cat > /tmp/test_value.sh << 'EOF'
+#!/bin/bash
+source "$(dirname "$0")/lib/core/ui.sh"
 
-if $test_framework_ok; then
-  echo -e "${COLOR_GREEN}✓${COLOR_RESET} Test framework intact"
-else
-  echo -e "${COLOR_RED}✗${COLOR_RESET} Test framework has issues"
-  all_tests_passed=false
-fi
+show_header
+section_header "Testing Piped Input"
 
-if $docs_ok; then
-  echo -e "${COLOR_GREEN}✓${COLOR_RESET} Documentation complete"
-else
-  echo -e "${COLOR_RED}✗${COLOR_RESET} Documentation incomplete"
-  all_tests_passed=false
-fi
+# Simple value prompt test
+value=$(prompt_value "Enter a value" "default" "^[a-zA-Z0-9_]+$")
+echo "User entered: $value"
 
-echo -e "\n"
-if $all_tests_passed; then
-  echo -e "${COLOR_GREEN}All verification tests passed!${COLOR_RESET}"
-  exit 0
-else
-  echo -e "${COLOR_RED}Some verification tests failed.${COLOR_RESET}"
-  exit 1
-fi
+echo "Test completed successfully!"
+EOF
+
+    chmod +x /tmp/test_value.sh
+
+    # Run the script with echo piping input "test_value" to it
+    echo "test_value" | /tmp/test_value.sh > "$TEST_OUTPUT" 2>&1
+
+    # Check if the output contains the success message
+    if grep -q "User entered: test_value" "$TEST_OUTPUT" && grep -q "Test completed successfully" "$TEST_OUTPUT"; then
+        echo "✅ Value prompt via pipe test passed!"
+        return 0
+    else
+        echo "❌ Value prompt via pipe test failed!"
+        echo "Output:"
+        cat "$TEST_OUTPUT"
+        return 1
+    fi
+}
+
+# Main test function
+main() {
+    echo "=== Running Simple Verification Tests ==="
+    echo "These tests verify that UI functions correctly handle piped input"
+    echo
+
+    # Copy the UI file to tmp for testing
+    mkdir -p /tmp/lib/core
+    cp "$REPO_DIR/lib/core/ui.sh" /tmp/lib/core/
+
+    # Run the tests
+    test_piped_menu_selection
+    local menu_result=$?
+
+    test_piped_yes_no
+    local yes_no_result=$?
+
+    test_piped_value
+    local value_result=$?
+
+    # Clean up
+    rm -f /tmp/test_menu.sh /tmp/test_yes_no.sh /tmp/test_value.sh "$TEST_OUTPUT"
+    rm -rf /tmp/lib
+
+    echo
+    echo "=== Test Summary ==="
+
+    # Check if all tests passed
+    if [ $menu_result -eq 0 ] && [ $yes_no_result -eq 0 ] && [ $value_result -eq 0 ]; then
+        echo "All tests passed! The UI functions correctly handle piped input."
+        return 0
+    else
+        echo "Some tests failed. See above for details."
+        return 1
+    fi
+}
+
+# Run the tests
+main

@@ -1,0 +1,41 @@
+﻿2025-04-14T05:20:30.4226488Z ##[group]Run # Create a simplified test script that doesn't depend on complex mocking
+2025-04-14T05:20:30.4227403Z [36;1m# Create a simplified test script that doesn't depend on complex mocking[0m
+2025-04-14T05:20:30.4227859Z [36;1mcat > ./tests/simple_test.sh << 'EOF'[0m
+2025-04-14T05:20:30.4228138Z [36;1m#!/bin/bash[0m
+2025-04-14T05:20:30.4228408Z [36;1mecho "Running simplified integration test"[0m
+2025-04-14T05:20:30.4228820Z [36;1mecho "Checking if script files exist and are executable..."[0m
+2025-04-14T05:20:30.4229240Z [36;1m[0m
+2025-04-14T05:20:30.4229478Z [36;1m# Check main script exists and is executable[0m
+2025-04-14T05:20:30.4229840Z [36;1mif [ -x "./bin/pve-template-wizard.sh" ]; then[0m
+2025-04-14T05:20:30.4230179Z [36;1m  echo "✅ Main script is executable"[0m
+2025-04-14T05:20:30.4230474Z [36;1melse[0m
+2025-04-14T05:20:30.4230748Z [36;1m  echo "❌ Main script is not executable or doesn't exist"[0m
+2025-04-14T05:20:30.4231081Z [36;1m  exit 1[0m
+2025-04-14T05:20:30.4231284Z [36;1mfi[0m
+2025-04-14T05:20:30.4231510Z [36;1m[0m
+2025-04-14T05:20:30.4231720Z [36;1m# Check if core modules exist[0m
+2025-04-14T05:20:30.4232063Z [36;1mfor module in ui.sh logging.sh config.sh validation.sh; do[0m
+2025-04-14T05:20:30.4232441Z [36;1m  if [ -f "./lib/core/$module" ]; then[0m
+2025-04-14T05:20:30.4232741Z [36;1m    echo "✅ Module $module exists"[0m
+2025-04-14T05:20:30.4233004Z [36;1m  else[0m
+2025-04-14T05:20:30.4233251Z [36;1m    echo "❌ Module $module doesn't exist"[0m
+2025-04-14T05:20:30.4233531Z [36;1m    exit 1[0m
+2025-04-14T05:20:30.4233739Z [36;1m  fi[0m
+2025-04-14T05:20:30.4233927Z [36;1mdone[0m
+2025-04-14T05:20:30.4234120Z [36;1m[0m
+2025-04-14T05:20:30.4234329Z [36;1mecho "All simple tests passed!"[0m
+2025-04-14T05:20:30.4234599Z [36;1mexit 0[0m
+2025-04-14T05:20:30.4234796Z [36;1mEOF[0m
+2025-04-14T05:20:30.4234986Z [36;1m[0m
+2025-04-14T05:20:30.4235192Z [36;1mchmod +x ./tests/simple_test.sh[0m
+2025-04-14T05:20:30.4235465Z [36;1m./tests/simple_test.sh[0m
+2025-04-14T05:20:30.4286501Z shell: /usr/bin/bash -e {0}
+2025-04-14T05:20:30.4287024Z ##[endgroup]
+2025-04-14T05:20:30.4391086Z Running simplified integration test
+2025-04-14T05:20:30.4391873Z Checking if script files exist and are executable...
+2025-04-14T05:20:30.4392712Z ✅ Main script is executable
+2025-04-14T05:20:30.4393217Z ✅ Module ui.sh exists
+2025-04-14T05:20:30.4393663Z ✅ Module logging.sh exists
+2025-04-14T05:20:30.4394142Z ✅ Module config.sh exists
+2025-04-14T05:20:30.4394452Z ✅ Module validation.sh exists
+2025-04-14T05:20:30.4394727Z All simple tests passed!

@@ -4,6 +4,18 @@
 # Provides test-specific implementations of functions and utilities
 #
 
+# Mock test for terminal stdin to ensure UI functions work in tests
+# Original: [ -t 0 ]
+[ () {
+    if [[ "$1" == "-t" && "$2" == "0" ]]; then
+        # Always return true during tests (stdin is a terminal)
+        return 0
+    else
+        # For all other tests, use the actual [ command
+        builtin [ "$@"
+    fi
+}
+
 # Global variables for input mocking
 MOCK_INPUTS=()
 MOCK_INPUT_INDEX=0

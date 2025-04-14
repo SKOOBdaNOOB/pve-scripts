@@ -1,0 +1,58 @@
+﻿2025-04-14T05:20:30.3381967Z ##[group]Run # Run with a timeout to prevent hanging
+2025-04-14T05:20:30.3382401Z [36;1m# Run with a timeout to prevent hanging[0m
+2025-04-14T05:20:30.3382774Z [36;1mtimeout 30s ./tests/run_tests.sh integration || {[0m
+2025-04-14T05:20:30.3383224Z [36;1m  echo "⚠️ Integration tests timed out but continuing with pipeline"[0m
+2025-04-14T05:20:30.3383697Z [36;1m  echo "This is expected behavior as the tests are being improved"[0m
+2025-04-14T05:20:30.3384045Z [36;1m}[0m
+2025-04-14T05:20:30.3433786Z shell: /usr/bin/bash -e {0}
+2025-04-14T05:20:30.3434079Z ##[endgroup]
+2025-04-14T05:20:30.3557399Z [34m==========================================[0m
+2025-04-14T05:20:30.3558104Z [34m  Proxmox VM Template Wizard Test Suite  [0m
+2025-04-14T05:20:30.3558517Z [34m==========================================[0m
+2025-04-14T05:20:30.3558723Z 
+2025-04-14T05:20:30.3558906Z [33m== Running Integration Tests ==[0m
+2025-04-14T05:20:30.3559107Z 
+2025-04-14T05:20:30.3593184Z [33m⚠ The 'timeout' command is not available. Test timeouts may not work correctly.[0m
+2025-04-14T05:20:30.3606221Z [33mRunning test file: wizard_flow_tests.sh[0m
+2025-04-14T05:20:30.3656375Z [34mRunning test: Main Menu Exit[0m
+2025-04-14T05:20:30.3657115Z Testing main menu exit functionality...
+2025-04-14T05:20:30.3740609Z DEBUG Output: DEBUG: Running test in safe environment with 5 second timeout
+2025-04-14T05:20:30.3741619Z DEBUG: Using fallback timeout method (timeout command not available)
+2025-04-14T05:20:30.3742324Z ERROR: Test timed out after 5 seconds
+2025-04-14T05:20:30.3767828Z [31m✗ Test failed: Main menu exit not detected[0m
+2025-04-14T05:20:30.3787897Z [31m  Output: DEBUG: Running test in safe environment with 5 second timeout DEBUG: Using fallback timeout method (timeout command not available) ERROR: Test timed out after 5 seconds [0m
+2025-04-14T05:20:30.3788793Z 
+2025-04-14T05:20:30.3789059Z [34mRunning test: Main Menu Invalid Selection[0m
+2025-04-14T05:20:30.3789456Z Testing main menu invalid selection handling...
+2025-04-14T05:20:30.3870396Z DEBUG Output: DEBUG: Running test in safe environment with 5 second timeout
+2025-04-14T05:20:30.3871323Z DEBUG: Using fallback timeout method (timeout command not available)
+2025-04-14T05:20:30.3872002Z ERROR: Test timed out after 5 seconds
+2025-04-14T05:20:30.3896947Z [31m✗ Test failed: Invalid selection handling not working[0m
+2025-04-14T05:20:30.3916336Z [31m  Output: DEBUG: Running test in safe environment with 5 second timeout DEBUG: Using fallback timeout method (timeout command not available) ERROR: Test timed out after 5 seconds [0m
+2025-04-14T05:20:30.3917658Z 
+2025-04-14T05:20:30.3918026Z [34mRunning test: Main Menu Max Attempts[0m
+2025-04-14T05:20:30.3918562Z Testing main menu max attempts handling...
+2025-04-14T05:20:30.4000889Z DEBUG Output: DEBUG: Running test in safe environment with 5 second timeout
+2025-04-14T05:20:30.4001859Z DEBUG: Using fallback timeout method (timeout command not available)
+2025-04-14T05:20:30.4002384Z ERROR: Test timed out after 5 seconds
+2025-04-14T05:20:30.4027144Z [31m✗ Test failed: Max attempts handling not working[0m
+2025-04-14T05:20:30.4046353Z [31m  Output: DEBUG: Running test in safe environment with 5 second timeout DEBUG: Using fallback timeout method (timeout command not available) ERROR: Test timed out after 5 seconds [0m
+2025-04-14T05:20:30.4047772Z 
+2025-04-14T05:20:30.4048117Z [34mRunning test: Submenu Handling[0m
+2025-04-14T05:20:30.4048547Z Testing submenu navigation...
+2025-04-14T05:20:30.4133981Z DEBUG Output: DEBUG: Running test in safe environment with 8 second timeout
+2025-04-14T05:20:30.4134932Z DEBUG: Using fallback timeout method (timeout command not available)
+2025-04-14T05:20:30.4135605Z ERROR: Test timed out after 8 seconds
+2025-04-14T05:20:30.4164263Z [31m✗ Test failed: Submenu navigation not working[0m
+2025-04-14T05:20:30.4188786Z [31m  Output: DEBUG: Running test in safe environment with 8 second timeout DEBUG: Using fallback timeout method (timeout command not available) ERROR: Test timed out after 8 seconds [0m
+2025-04-14T05:20:30.4190352Z 
+2025-04-14T05:20:30.4191878Z 
+2025-04-14T05:20:30.4192285Z [34m==========================================[0m
+2025-04-14T05:20:30.4192940Z [34m              Test Results               [0m
+2025-04-14T05:20:30.4193579Z [34m==========================================[0m
+2025-04-14T05:20:30.4194060Z Total Tests: 0
+2025-04-14T05:20:30.4194477Z Passed:      [32m0[0m
+2025-04-14T05:20:30.4194930Z Failed:      [31m0[0m
+2025-04-14T05:20:30.4195364Z Skipped:     [33m0[0m
+2025-04-14T05:20:30.4195802Z Timed Out:   [31m0[0m
+2025-04-14T05:20:30.4196294Z [32mAll tests passed successfully![0m

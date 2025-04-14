@@ -63,7 +63,16 @@ prompt_yes_no() {
     fi
 
     while true; do
-        read -p "$prompt " response
+        # Check if stdin is a terminal or is being redirected
+        if [ -t 0 ]; then
+            # Terminal input
+            read -p "$prompt " response
+        else
+            # Redirected input - use /dev/tty instead
+            echo -n "$prompt "
+            read response < /dev/tty
+        fi
+
         response=${response:-$default}
         local response_lower=$(echo "$response" | tr '[:upper:]' '[:lower:]')
         case "$response_lower" in
@@ -82,7 +91,16 @@ prompt_value() {
     local value
 
     while true; do
-        read -p "$prompt [${default}]: " value
+        # Check if stdin is a terminal or is being redirected
+        if [ -t 0 ]; then
+            # Terminal input
+            read -p "$prompt [${default}]: " value
+        else
+            # Redirected input - use /dev/tty instead
+            echo -n "$prompt [${default}]: "
+            read value < /dev/tty
+        fi
+
         value=${value:-$default}
 
         if [[ -z "$validation" ]] || [[ "$value" =~ $validation ]]; then
@@ -122,7 +140,15 @@ show_menu() {
             return 255  # Special return code to indicate max attempts reached
         fi
 
-        read -p "Enter selection [1-${#options[@]}]: " selection
+        # Check if stdin is a terminal or is being redirected
+        if [ -t 0 ]; then
+            # Terminal input
+            read -p "Enter selection [1-${#options[@]}]: " selection
+        else
+            # Redirected input - use /dev/tty instead
+            echo -n "Enter selection [1-${#options[@]}]: "
+            read selection < /dev/tty
+        fi
 
         # Check for exit command
         local selection_lower=$(echo "$selection" | tr '[:upper:]' '[:lower:]')

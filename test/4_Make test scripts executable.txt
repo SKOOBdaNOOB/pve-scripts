@@ -1,0 +1,4 @@
+﻿2025-04-14T05:20:30.2693060Z ##[group]Run chmod +x tests/run_tests.sh tests/unit/*.sh tests/integration/*.sh tests/mock/*.sh
+2025-04-14T05:20:30.2693736Z [36;1mchmod +x tests/run_tests.sh tests/unit/*.sh tests/integration/*.sh tests/mock/*.sh[0m
+2025-04-14T05:20:30.2742758Z shell: /usr/bin/bash -e {0}
+2025-04-14T05:20:30.2743028Z ##[endgroup]
