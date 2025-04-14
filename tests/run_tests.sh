@@ -111,6 +111,17 @@ run_unit_tests() {
             handle_test_result "$test_file"
         fi
     done
+
+    # Run specific module loading test first since it's critical
+    echo -e "${YELLOW}Running critical test: module_loading_tests.sh${RESET}"
+    echo -e "${BLUE}This test verifies all module functions are properly loaded${RESET}"
+
+    # Execute with timeout to avoid hangs
+    if command -v timeout &> /dev/null; then
+        timeout 30 bash "$SCRIPT_DIR/unit/module_loading_tests.sh" || handle_test_result "$SCRIPT_DIR/unit/module_loading_tests.sh"
+    else
+        bash "$SCRIPT_DIR/unit/module_loading_tests.sh" || handle_test_result "$SCRIPT_DIR/unit/module_loading_tests.sh"
+    fi
 }
 
 # Run all integration tests

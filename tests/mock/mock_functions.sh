@@ -123,6 +123,105 @@ setup_mock_commands() {
     MOCK_COMMAND_INDEX=0
 }
 
+# Mock Proxmox commands
+mock_proxmox_commands() {
+    # Create a directory for mock data
+    MOCK_DIR=$(mktemp -d)
+
+    # Mock output files
+    local storage_list="$MOCK_DIR/storage_list.json"
+    local storage_details="$MOCK_DIR/storage_details.json"
+    local vm_list="$MOCK_DIR/vm_list.json"
+
+    # Create mock storage list output
+    cat > "$storage_list" << EOF
+[
+  {"storage":"local-lvm","content":"images,rootdir","type":"lvmthin"},
+  {"storage":"local","content":"iso,vztmpl,backup","type":"dir"},
+  {"storage":"local-zfs","content":"images,rootdir","type":"zfspool"}
+]
+EOF
+
+    # Create mock storage details output
+    cat > "$storage_details" << EOF
+{"storage":"local-lvm","content":"images,rootdir","type":"lvmthin","avail":"107374182400"}
+EOF
+
+    # Create mock VM list output
+    cat > "$vm_list" << EOF
+[
+  {"vmid":100,"name":"ubuntu-template","status":"stopped","template":1},
+  {"vmid":101,"name":"debian-template","status":"stopped","template":1},
+  {"vmid":102,"name":"centos-template","status":"stopped","template":1}
+]
+EOF
+
+    # Mock qm command
+    function qm() {
+        case "$1" in
+            list)
+                cat "$vm_list"
+                return 0
+                ;;
+            *)
+                # For other qm subcommands, just pretend they worked
+                echo "SUCCESS: Command executed successfully"
+                return 0
+                ;;
+        esac
+    }
+
+    # Mock pvesh command
+    function pvesh() {
+        case "$1" in
+            get)
+                if [[ "$2" == "/storage" ]]; then
+                    cat "$storage_list"
+                    return 0
+                elif [[ "$2" == "/storage/local-lvm" || "$2" =~ "/storage/local" ]]; then
+                    cat "$storage_details"
+                    return 0
+                else
+                    # For other paths, return a generic success response
+                    echo "[]"
+                    return 0
+                fi
+                ;;
+            *)
+                # For other pvesh subcommands, just pretend they worked
+                echo "SUCCESS: Command executed successfully"
+                return 0
+                ;;
+        esac
+    }
+
+    # Mock wget command
+    function wget() {
+        echo "Mock wget: Downloading $*"
+        # Create a fake downloaded file
+        touch "$2"
+        return 0
+    }
+
+    # Mock sha256sum command
+    function sha256sum() {
+        echo "0000000000000000000000000000000000000000000000000000000000000000 $1"
+        return 0
+    }
+
+    export -f qm pvesh wget sha256sum
+}
+
+# Clean up mock environment
+cleanup_mock_proxmox() {
+    if [[ -d "$MOCK_DIR" ]]; then
+        rm -rf "$MOCK_DIR"
+    fi
+
+    # Unset mocked functions
+    unset -f qm pvesh wget sha256sum
+}
+
 # Mock command execution
 command() {
     local action=$1

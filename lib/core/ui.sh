@@ -68,9 +68,14 @@ prompt_yes_no() {
             # Terminal input
             read -p "$prompt " response
         else
-            # Redirected input - use /dev/tty instead
+            # Redirected input - try stdin first, then /dev/tty
             echo -n "$prompt "
-            read response < /dev/tty
+            if read -t 1 response; then
+                echo "$response" # Echo the response for visibility
+            else
+                # If nothing available from stdin, use /dev/tty
+                read response < /dev/tty
+            fi
         fi
 
         response=${response:-$default}
@@ -96,9 +101,14 @@ prompt_value() {
             # Terminal input
             read -p "$prompt [${default}]: " value
         else
-            # Redirected input - use /dev/tty instead
+            # Redirected input - try stdin first, then /dev/tty
             echo -n "$prompt [${default}]: "
-            read value < /dev/tty
+            if read -t 1 value; then
+                echo "$value" # Echo the value for visibility
+            else
+                # If nothing available from stdin, use /dev/tty
+                read value < /dev/tty
+            fi
         fi
 
         value=${value:-$default}
@@ -145,9 +155,16 @@ show_menu() {
             # Terminal input
             read -p "Enter selection [1-${#options[@]}]: " selection
         else
-            # Redirected input - use /dev/tty instead
+            # Redirected input - use /dev/tty instead, but also check if input is available first
             echo -n "Enter selection [1-${#options[@]}]: "
-            read selection < /dev/tty
+
+            # Try to read from stdin first (for testing/automation)
+            if read -t 1 selection; then
+                echo "$selection" # Echo the selection for visibility
+            else
+                # If nothing available from stdin, use /dev/tty
+                read selection < /dev/tty
+            fi
         fi
 
         # Check for exit command

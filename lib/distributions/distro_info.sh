@@ -7,69 +7,81 @@
 # Import required modules
 source "$(dirname "${BASH_SOURCE[0]}")/../core/logging.sh"
 
-# Distribution information
-declare -A DISTRO_INFO
+# Distribution information - using a function-based approach instead of associative arrays
+# for better compatibility across different shells
 
-# Function to initialize distribution information
+# Function to get a distribution property
+get_distro_property() {
+    local distro="$1"
+    local property="$2"
+
+    case "$distro,$property" in
+        # Alma Linux 9
+        "alma9,name") echo "Alma Linux 9" ;;
+        "alma9,url") echo "https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2" ;;
+        "alma9,checksum_url") echo "https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/CHECKSUM" ;;
+        "alma9,filename") echo "AlmaLinux-9-GenericCloud-latest.x86_64.qcow2" ;;
+        "alma9,os_type") echo "l26" ;;
+        "alma9,needs_conversion") echo "false" ;;
+
+        # Amazon Linux 2
+        "amazon2,name") echo "Amazon Linux 2" ;;
+        "amazon2,url") echo "https://cdn.amazonlinux.com/os-images/2.0.20230727.0/kvm/amzn2-kvm-2.0.20230727.0-x86_64.xfs.gpt.qcow2" ;;
+        "amazon2,checksum_url") echo "" ;;
+        "amazon2,filename") echo "amzn2-kvm-2.0.20230727.0-x86_64.xfs.gpt.qcow2" ;;
+        "amazon2,os_type") echo "l26" ;;
+        "amazon2,needs_conversion") echo "false" ;;
+
+        # CentOS 9 Stream
+        "centos9,name") echo "CentOS 9 Stream" ;;
+        "centos9,url") echo "https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2" ;;
+        "centos9,checksum_url") echo "" ;;
+        "centos9,filename") echo "CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2" ;;
+        "centos9,os_type") echo "l26" ;;
+        "centos9,needs_conversion") echo "false" ;;
+
+        # Fedora 38
+        "fedora38,name") echo "Fedora 38" ;;
+        "fedora38,url") echo "https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-38-1.6.x86_64.qcow2" ;;
+        "fedora38,checksum_url") echo "" ;;
+        "fedora38,filename") echo "Fedora-Cloud-Base-38-1.6.x86_64.qcow2" ;;
+        "fedora38,os_type") echo "l26" ;;
+        "fedora38,needs_conversion") echo "false" ;;
+
+        # Oracle Linux 9
+        "oracle9,name") echo "Oracle Linux 9" ;;
+        "oracle9,url") echo "https://yum.oracle.com/templates/OracleLinux/OL9/u2/x86_64/OL9U2_x86_64-kvm-b197.qcow" ;;
+        "oracle9,checksum") echo "840345cb866837ac7cc7c347cd9a8196c3a17e9c054c613eda8c2a912434c956" ;;
+        "oracle9,filename") echo "OL9U2_x86_64-kvm-b197.qcow" ;;
+        "oracle9,os_type") echo "l26" ;;
+        "oracle9,needs_conversion") echo "true" ;;
+        "oracle9,converted_filename") echo "OL9U2_x86_64-kvm-b197.qcow2" ;;
+
+        # Rocky Linux 9
+        "rocky9,name") echo "Rocky Linux 9" ;;
+        "rocky9,url") echo "https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2" ;;
+        "rocky9,checksum_url") echo "" ;;
+        "rocky9,filename") echo "Rocky-9-GenericCloud-Base.latest.x86_64.qcow2" ;;
+        "rocky9,os_type") echo "l26" ;;
+        "rocky9,needs_conversion") echo "false" ;;
+
+        # Ubuntu 23.04 Lunar Lobster
+        "ubuntu23,name") echo "Ubuntu 23.04 Lunar Lobster" ;;
+        "ubuntu23,url") echo "https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-amd64.img" ;;
+        "ubuntu23,checksum_url") echo "" ;;
+        "ubuntu23,filename") echo "lunar-server-cloudimg-amd64.img" ;;
+        "ubuntu23,os_type") echo "l26" ;;
+        "ubuntu23,needs_conversion") echo "false" ;;
+
+        # Default - return empty string
+        *) echo "" ;;
+    esac
+}
+
+# Function to initialize distribution information (no-op now, kept for compatibility)
 init_distro_info() {
-    # Alma Linux 9
-    DISTRO_INFO["alma9,name"]="Alma Linux 9"
-    DISTRO_INFO["alma9,url"]="https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
-    DISTRO_INFO["alma9,checksum_url"]="https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/CHECKSUM"
-    DISTRO_INFO["alma9,filename"]="AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
-    DISTRO_INFO["alma9,os_type"]="l26"
-    DISTRO_INFO["alma9,needs_conversion"]="false"
-
-    # Amazon Linux 2
-    DISTRO_INFO["amazon2,name"]="Amazon Linux 2"
-    DISTRO_INFO["amazon2,url"]="https://cdn.amazonlinux.com/os-images/2.0.20230727.0/kvm/amzn2-kvm-2.0.20230727.0-x86_64.xfs.gpt.qcow2"
-    DISTRO_INFO["amazon2,checksum_url"]=""
-    DISTRO_INFO["amazon2,filename"]="amzn2-kvm-2.0.20230727.0-x86_64.xfs.gpt.qcow2"
-    DISTRO_INFO["amazon2,os_type"]="l26"
-    DISTRO_INFO["amazon2,needs_conversion"]="false"
-
-    # CentOS 9 Stream
-    DISTRO_INFO["centos9,name"]="CentOS 9 Stream"
-    DISTRO_INFO["centos9,url"]="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2"
-    DISTRO_INFO["centos9,checksum_url"]=""
-    DISTRO_INFO["centos9,filename"]="CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2"
-    DISTRO_INFO["centos9,os_type"]="l26"
-    DISTRO_INFO["centos9,needs_conversion"]="false"
-
-    # Fedora 38
-    DISTRO_INFO["fedora38,name"]="Fedora 38"
-    DISTRO_INFO["fedora38,url"]="https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-38-1.6.x86_64.qcow2"
-    DISTRO_INFO["fedora38,checksum_url"]=""
-    DISTRO_INFO["fedora38,filename"]="Fedora-Cloud-Base-38-1.6.x86_64.qcow2"
-    DISTRO_INFO["fedora38,os_type"]="l26"
-    DISTRO_INFO["fedora38,needs_conversion"]="false"
-
-    # Oracle Linux 9
-    DISTRO_INFO["oracle9,name"]="Oracle Linux 9"
-    DISTRO_INFO["oracle9,url"]="https://yum.oracle.com/templates/OracleLinux/OL9/u2/x86_64/OL9U2_x86_64-kvm-b197.qcow"
-    DISTRO_INFO["oracle9,checksum"]="840345cb866837ac7cc7c347cd9a8196c3a17e9c054c613eda8c2a912434c956"
-    DISTRO_INFO["oracle9,filename"]="OL9U2_x86_64-kvm-b197.qcow"
-    DISTRO_INFO["oracle9,os_type"]="l26"
-    DISTRO_INFO["oracle9,needs_conversion"]="true"
-    DISTRO_INFO["oracle9,converted_filename"]="OL9U2_x86_64-kvm-b197.qcow2"
-
-    # Rocky Linux 9
-    DISTRO_INFO["rocky9,name"]="Rocky Linux 9"
-    DISTRO_INFO["rocky9,url"]="https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
-    DISTRO_INFO["rocky9,checksum_url"]=""
-    DISTRO_INFO["rocky9,filename"]="Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
-    DISTRO_INFO["rocky9,os_type"]="l26"
-    DISTRO_INFO["rocky9,needs_conversion"]="false"
-
-    # Ubuntu 23.04 Lunar Lobster
-    DISTRO_INFO["ubuntu23,name"]="Ubuntu 23.04 Lunar Lobster"
-    DISTRO_INFO["ubuntu23,url"]="https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-amd64.img"
-    DISTRO_INFO["ubuntu23,checksum_url"]=""
-    DISTRO_INFO["ubuntu23,filename"]="lunar-server-cloudimg-amd64.img"
-    DISTRO_INFO["ubuntu23,os_type"]="l26"
-    DISTRO_INFO["ubuntu23,needs_conversion"]="false"
-
-    log_debug "Distribution information initialized with ${#DISTRO_INFO[@]} entries"
+    log_debug "Using function-based distribution info system"
+    return 0
 }
 
 # Get a list of distribution keys
@@ -82,7 +94,7 @@ get_distro_keys() {
 get_distro_names() {
     local names=()
     for key in $(get_distro_keys); do
-        names+=("${DISTRO_INFO["$key,name"]}")
+        names+=("$(get_distro_property "$key" "name")")
     done
     echo "${names[@]}"
 }
@@ -91,12 +103,13 @@ get_distro_names() {
 get_disk_image_path() {
     local distro="$1"
     local images_path="$2"
-    local filename="${DISTRO_INFO["$distro,filename"]}"
+    local filename="$(get_distro_property "$distro" "filename")"
 
     # Check if needs conversion and return the converted filename if true
-    if [[ "${DISTRO_INFO["$distro,needs_conversion"]}" == "true" ]]; then
-        if [[ -n "${DISTRO_INFO["$distro,converted_filename"]}" ]]; then
-            echo "${images_path}/${DISTRO_INFO["$distro,converted_filename"]}"
+    if [[ "$(get_distro_property "$distro" "needs_conversion")" == "true" ]]; then
+        local converted_filename="$(get_distro_property "$distro" "converted_filename")"
+        if [[ -n "$converted_filename" ]]; then
+            echo "${images_path}/${converted_filename}"
         else
             local base_filename="${filename%.*}"
             echo "${images_path}/${base_filename}.qcow2"
@@ -112,8 +125,8 @@ download_distro_image() {
     local images_path="$2"
     local force_download="${3:-false}"
 
-    local url="${DISTRO_INFO["$distro,url"]}"
-    local filename="${DISTRO_INFO["$distro,filename"]}"
+    local url="$(get_distro_property "$distro" "url")"
+    local filename="$(get_distro_property "$distro" "filename")"
     local full_path="${images_path}/${filename}"
 
     # Check if image already exists
@@ -129,10 +142,10 @@ download_distro_image() {
             log_error "Failed to create directory: $images_path"
             return 1
         }
-    }
+    fi
 
     # Download the image
-    log_info "Downloading ${DISTRO_INFO["$distro,name"]} cloud image from: $url"
+    log_info "Downloading $(get_distro_property "$distro" "name") cloud image from: $url"
     log_info "This may take some time depending on your internet connection..."
 
     # Change to images directory
@@ -151,9 +164,12 @@ download_distro_image() {
     log_success "Download complete"
 
     # Handle checksum verification
-    if [[ -n "${DISTRO_INFO["$distro,checksum_url"]}" ]]; then
+    local checksum_url="$(get_distro_property "$distro" "checksum_url")"
+    local checksum="$(get_distro_property "$distro" "checksum")"
+
+    if [[ -n "$checksum_url" ]]; then
         log_info "Verifying checksum..."
-        wget -q "${DISTRO_INFO["$distro,checksum_url"]}" -O SHA256SUMS
+        wget -q "$checksum_url" -O SHA256SUMS
         if ! sha256sum -c SHA256SUMS --ignore-missing; then
             log_error "Checksum verification failed"
             cd "$current_dir"
@@ -161,9 +177,9 @@ download_distro_image() {
         else
             log_success "Checksum verification passed"
         fi
-    elif [[ -n "${DISTRO_INFO["$distro,checksum"]}" ]]; then
+    elif [[ -n "$checksum" ]]; then
         log_info "Verifying checksum..."
-        echo "${DISTRO_INFO["$distro,checksum"]} $filename" > SHA256SUMS-custom
+        echo "$checksum $filename" > SHA256SUMS-custom
         if ! sha256sum -c SHA256SUMS-custom; then
             log_error "Checksum verification failed"
             cd "$current_dir"
@@ -176,14 +192,12 @@ download_distro_image() {
     fi
 
     # Handle image conversion if needed
-    if [[ "${DISTRO_INFO["$distro,needs_conversion"]}" == "true" ]]; then
+    if [[ "$(get_distro_property "$distro" "needs_conversion")" == "true" ]]; then
         log_info "Converting image to qcow2 format..."
         local base_filename="${filename%.*}"
-        local converted_filename
+        local converted_filename="$(get_distro_property "$distro" "converted_filename")"
 
-        if [[ -n "${DISTRO_INFO["$distro,converted_filename"]}" ]]; then
-            converted_filename="${DISTRO_INFO["$distro,converted_filename"]}"
-        else
+        if [[ -z "$converted_filename" ]]; then
             converted_filename="${base_filename}.qcow2"
         fi
 

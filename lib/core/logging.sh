@@ -16,16 +16,28 @@ LOG_TO_SYSLOG=false
 LOG_SYSLOG_FACILITY="local0"
 LOG_TIMESTAMP_FORMAT="%Y-%m-%d %H:%M:%S"
 
-# Define log levels
-declare -A LOG_LEVELS
-LOG_LEVELS=(
-    ["debug"]=0
-    ["info"]=1
-    ["warning"]=2
-    ["error"]=3
-    ["critical"]=4
-    ["none"]=100
-)
+# Define log levels - using a more portable approach for shell compatibility
+# Instead of associative arrays which aren't well supported in zsh
+LOG_LEVEL_DEBUG=0
+LOG_LEVEL_INFO=1
+LOG_LEVEL_WARNING=2
+LOG_LEVEL_ERROR=3
+LOG_LEVEL_CRITICAL=4
+LOG_LEVEL_NONE=100
+
+# Function to get numeric log level from string
+get_log_level_num() {
+    local level="$1"
+    case "$level" in
+        debug) echo "$LOG_LEVEL_DEBUG" ;;
+        info) echo "$LOG_LEVEL_INFO" ;;
+        warning) echo "$LOG_LEVEL_WARNING" ;;
+        error) echo "$LOG_LEVEL_ERROR" ;;
+        critical) echo "$LOG_LEVEL_CRITICAL" ;;
+        none) echo "$LOG_LEVEL_NONE" ;;
+        *) echo "$LOG_LEVEL_INFO" ;;  # Default to info
+    esac
+}
 
 # Initialize logging system
 init_logging() {
@@ -105,8 +117,8 @@ check_log_rotation() {
 _log() {
     local level="$1"
     local message="$2"
-    local log_level_num=${LOG_LEVELS[$level]}
-    local current_level_num=${LOG_LEVELS[$LOG_LEVEL]}
+    local log_level_num=$(get_log_level_num "$level")
+    local current_level_num=$(get_log_level_num "$LOG_LEVEL")
 
     # Skip if message level is below current log level
     if [ "$log_level_num" -lt "$current_level_num" ]; then

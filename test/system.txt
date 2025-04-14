@@ -1,5 +1,0 @@
-2025-04-14T05:20:15.1402743Z Requested labels: ubuntu-latest
-2025-04-14T05:20:15.1402743Z Job defined at: SKOOBdaNOOB/pve-scripts/.github/workflows/test.yml@refs/heads/main
-2025-04-14T05:20:15.1402743Z Waiting for a runner to pick up this job...
-2025-04-14T05:20:15.5123551Z Job is waiting for a hosted runner to come online.
-2025-04-14T05:20:15.5123707Z Job is about to start running on the hosted runner: GitHub Actions

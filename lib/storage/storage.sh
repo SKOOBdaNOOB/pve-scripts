@@ -98,7 +98,7 @@ check_storage_pool() {
             fi
         else
             log_warning "Could not determine content types for storage pool '$storage_pool'"
-        }
+        fi
 
         # Get storage type
         if [[ "$output" =~ \"type\":\"([^\"]+)\" ]]; then

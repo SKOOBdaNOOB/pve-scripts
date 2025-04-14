@@ -114,7 +114,7 @@ save_profile() {
             show_error "Failed to create profiles directory: $profile_path"
             return 1
         }
-    }
+    fi
 
     local profile_file="${profile_path}/${profile_name}.conf"
 

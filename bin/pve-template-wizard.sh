@@ -107,6 +107,32 @@ create_new_template() {
 
     show_success "Selected: ${DISTRO_INFO["$selected_distro,name"]}"
 
+    # Validate that critical functions exist before calling them
+    if ! declare -F select_storage_pool > /dev/null; then
+        show_error "Critical function 'select_storage_pool' is not available!"
+        show_error "This might indicate an issue with module loading."
+        show_info "Checking module availability..."
+
+        # Diagnostic output
+        if [ -f "$REPO_DIR/lib/storage/storage.sh" ]; then
+            show_info "Storage module file exists at: $REPO_DIR/lib/storage/storage.sh"
+        else
+            show_error "Storage module file does not exist at: $REPO_DIR/lib/storage/storage.sh"
+        fi
+
+        # Try to reload the module
+        show_info "Attempting to reload storage module..."
+        source "$REPO_DIR/lib/storage/storage.sh"
+
+        # Check again after reload
+        if ! declare -F select_storage_pool > /dev/null; then
+            show_error "Failed to load 'select_storage_pool' function. Template creation cannot proceed."
+            return 1
+        else
+            show_success "Successfully reloaded storage module."
+        fi
+    fi
+
     # Configure storage
     select_storage_pool
 

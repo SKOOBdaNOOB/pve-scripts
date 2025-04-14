@@ -11,6 +11,35 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 # Global variables for mock environment
 MOCK_TEST_ENV=false
 
+# Colors for test output
+TEST_RED="\033[31m"
+TEST_GREEN="\033[32m"
+TEST_YELLOW="\033[33m"
+TEST_BLUE="\033[34m"
+TEST_MAGENTA="\033[35m"
+TEST_RESET="\033[0m"
+
+# Test logging functions
+log_test_info() {
+    echo -e "${TEST_BLUE}[INFO]${TEST_RESET} $1"
+}
+
+log_test_pass() {
+    echo -e "${TEST_GREEN}[PASS]${TEST_RESET} $1"
+}
+
+log_test_fail() {
+    echo -e "${TEST_RED}[FAIL]${TEST_RESET} $1"
+}
+
+log_test_warn() {
+    echo -e "${TEST_YELLOW}[WARN]${TEST_RESET} $1"
+}
+
+log_test_section() {
+    echo -e "\n${TEST_MAGENTA}=== $1 ===${TEST_RESET}"
+}
+
 # Enable mocked test environment
 enable_mock_test_env() {
     MOCK_TEST_ENV=true
