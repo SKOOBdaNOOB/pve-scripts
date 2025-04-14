@@ -4,80 +4,80 @@ This document outlines a comprehensive plan for enhancing the Proxmox VM Templat
 
 ## Input Validation Improvements
 
-- [ ] **IP Address Validation**
-  - [ ] Implement proper regex validation for IP addresses
-  - [ ] Add CIDR notation validation
-  - [ ] Validate gateway settings
-  - [ ] Check for network conflicts
+- [x] **IP Address Validation**
+  - [x] Implement proper regex validation for IP addresses
+  - [x] Add CIDR notation validation
+  - [x] Validate gateway settings
+  - [x] Check for network conflicts
 
-- [ ] **Path Validation**
-  - [ ] Validate image directory paths
-  - [ ] Check SSH key paths and permissions
-  - [ ] Verify write permissions before operations
-  - [ ] Handle relative and absolute paths correctly
+- [x] **Path Validation**
+  - [x] Validate image directory paths
+  - [x] Check SSH key paths and permissions
+  - [x] Verify write permissions before operations
+  - [x] Handle relative and absolute paths correctly
 
-- [ ] **Resource Validation**
-  - [ ] Validate VM resources against system capabilities
-  - [ ] Check memory allocation against host available memory
-  - [ ] Verify CPU core allocation is valid
-  - [ ] Add warnings for overcommitment
+- [x] **Resource Validation**
+  - [x] Validate VM resources against system capabilities
+  - [x] Check memory allocation against host available memory
+  - [x] Verify CPU core allocation is valid
+  - [x] Add warnings for overcommitment
 
-- [ ] **Hostname Validation**
-  - [ ] Ensure VM names follow proper naming conventions
-  - [ ] Check for duplicate VM names/IDs
-  - [ ] Validate against Proxmox naming restrictions
-  - [ ] Add auto-correction suggestions for invalid names
+- [x] **Hostname Validation**
+  - [x] Ensure VM names follow proper naming conventions
+  - [x] Check for duplicate VM names/IDs
+  - [x] Validate against Proxmox naming restrictions
+  - [x] Add auto-correction suggestions for invalid names
 
 ## Storage and Disk Management
 
-- [ ] **Storage Pool Selection**
-  - [ ] Add menu to select from available Proxmox storage pools
-  - [ ] Dynamically fetch available storage pools from Proxmox
-  - [ ] Show storage pool details (type, available space)
-  - [ ] Remember last used storage pool
+- [x] **Storage Pool Selection**
+  - [x] Add menu to select from available Proxmox storage pools
+  - [x] Dynamically fetch available storage pools from Proxmox
+  - [x] Show storage pool details (type, available space)
+  - [x] Remember last used storage pool
 
-- [ ] **Custom Disk Paths**
-  - [ ] Allow specifying custom paths for source images
-  - [ ] Support custom paths for target VMs
-  - [ ] Add option to use different storage for different disk types
-  - [ ] Support for multiple disks
+- [x] **Custom Disk Paths**
+  - [x] Allow specifying custom paths for source images
+  - [x] Support custom paths for target VMs
+  - [x] Add option to use different storage for different disk types
+  - [x] Support for multiple disks
 
-- [ ] **Storage Type Detection**
-  - [ ] Auto-detect available storage types
-  - [ ] Recommend appropriate options based on VM purpose
-  - [ ] Warn about performance implications of storage choices
-  - [ ] Provide guidance on optimal storage configuration
+- [x] **Storage Type Detection**
+  - [x] Auto-detect available storage types
+  - [x] Recommend appropriate options based on VM purpose
+  - [x] Warn about performance implications of storage choices
+  - [x] Provide guidance on optimal storage configuration
 
-- [ ] **Disk Configuration**
-  - [ ] Allow custom disk size specification
-  - [ ] Support for disk format selection (raw, qcow2)
-  - [ ] Option to enable/disable disk cache
-  - [ ] Support for SSD emulation
+- [x] **Disk Configuration**
+  - [x] Allow custom disk size specification
+  - [x] Support for disk format selection (raw, qcow2)
+  - [x] Option to enable/disable disk cache
+  - [x] Support for SSD emulation
 
 ## User Experience Enhancements
 
-- [ ] **Wizard Flow**
-  - [ ] Improve transitions between sections
-  - [ ] Add progress indicators for multi-step operations
-  - [ ] Implement a more intuitive menu structure
-  - [ ] Add ability to go back to previous steps
+- [x] **Wizard Flow**
+  - [x] Improve transitions between sections
+  - [x] Add progress indicators for multi-step operations
+  - [x] Implement a more intuitive menu structure
+  - [x] Add ability to go back to previous steps
 
-- [ ] **Default Values**
-  - [ ] Make defaults more intelligent by detecting environment
-  - [ ] Suggest sensible defaults based on VM type
-  - [ ] Remember user preferences across runs
-  - [ ] Provide explanations for default choices
+- [x] **Default Values**
+  - [x] Make defaults more intelligent by detecting environment
+  - [x] Suggest sensible defaults based on VM type
+  - [x] Remember user preferences across runs
+  - [x] Provide explanations for default choices
 
-- [ ] **Configuration Profiles**
-  - [ ] Allow saving multiple named configuration profiles
-  - [ ] Implement profile import/export
-  - [ ] Add profile comparison feature
-  - [ ] Support for profile templates
+- [x] **Configuration Profiles**
+  - [x] Allow saving multiple named configuration profiles
+  - [x] Implement profile import/export
+  - [x] Add profile comparison feature
+  - [x] Support for profile templates
 
-- [ ] **Command Preview**
-  - [ ] Show commands before execution
-  - [ ] Provide explanations of command parameters
-  - [ ] Option to copy commands to clipboard
+- [x] **Command Preview**
+  - [x] Show commands before execution
+  - [x] Provide explanations of command parameters
+  - [x] Option to copy commands to clipboard
   - [ ] Dry-run mode to simulate execution
 
 - [ ] **Resumable Operations**
@@ -88,49 +88,49 @@ This document outlines a comprehensive plan for enhancing the Proxmox VM Templat
 
 ## Additional Features
 
-- [ ] **Template Management**
-  - [ ] Add options to list existing templates
-  - [ ] Support for modifying existing templates
-  - [ ] Template deletion with safeguards
-  - [ ] Template cloning and renaming
+- [x] **Template Management**
+  - [x] Add options to list existing templates
+  - [x] Support for modifying existing templates
+  - [x] Template deletion with safeguards
+  - [x] Template cloning and renaming
 
-- [ ] **VM Customization**
-  - [ ] Expanded cloud-init options
-  - [ ] Support for custom scripts
+- [x] **VM Customization**
+  - [x] Expanded cloud-init options
+  - [x] Support for custom scripts
   - [ ] Package installation during VM creation
-  - [ ] User data and metadata configuration
+  - [x] User data and metadata configuration
 
-- [ ] **Network Configuration**
-  - [ ] Enhanced network setup with VLANs
-  - [ ] Support for multiple network interfaces
-  - [ ] Bridge configuration options
-  - [ ] Firewall rule suggestions
+- [x] **Network Configuration**
+  - [x] Enhanced network setup with VLANs
+  - [x] Support for multiple network interfaces
+  - [x] Bridge configuration options
+  - [x] Firewall rule suggestions
 
-- [ ] **Resource Allocation**
-  - [ ] More granular control over CPU (type, flags)
-  - [ ] Memory allocation options (ballooning, shares)
-  - [ ] CPU pinning and NUMA configuration
+- [x] **Resource Allocation**
+  - [x] More granular control over CPU (type, flags)
+  - [x] Memory allocation options (ballooning, shares)
+  - [x] CPU pinning and NUMA configuration
   - [ ] Resource limits and guarantees
 
-- [ ] **Batch Operations**
-  - [ ] Create multiple VMs with variations
-  - [ ] Batch template creation
+- [x] **Batch Operations**
+  - [x] Create multiple VMs with variations
+  - [x] Batch template creation
   - [ ] CSV/JSON import for bulk operations
-  - [ ] Parallel operation execution
+  - [x] Parallel operation execution
 
 ## Error Handling and Logging
 
-- [ ] **Improved Error Messages**
-  - [ ] More descriptive error messages
-  - [ ] Suggestions for resolving common errors
-  - [ ] Color-coded error severity
-  - [ ] Context-aware troubleshooting tips
+- [x] **Improved Error Messages**
+  - [x] More descriptive error messages
+  - [x] Suggestions for resolving common errors
+  - [x] Color-coded error severity
+  - [x] Context-aware troubleshooting tips
 
-- [ ] **Logging System**
-  - [ ] Implement comprehensive logging
-  - [ ] Log rotation and management
-  - [ ] Different verbosity levels
-  - [ ] Option to send logs to syslog
+- [x] **Logging System**
+  - [x] Implement comprehensive logging
+  - [x] Log rotation and management
+  - [x] Different verbosity levels
+  - [x] Option to send logs to syslog
 
 - [ ] **Recovery Mechanisms**
   - [ ] Automatic retry for transient failures
@@ -146,17 +146,17 @@ This document outlines a comprehensive plan for enhancing the Proxmox VM Templat
 
 ## Security Enhancements
 
-- [ ] **Configuration Security**
-  - [ ] Secure storage of sensitive configuration
-  - [ ] Proper permissions for config files
+- [x] **Configuration Security**
+  - [x] Secure storage of sensitive configuration
+  - [x] Proper permissions for config files
   - [ ] Option to encrypt saved configurations
-  - [ ] Automatic removal of temporary sensitive data
+  - [x] Automatic removal of temporary sensitive data
 
-- [ ] **SSH Key Management**
-  - [ ] Better SSH key generation options
-  - [ ] Support for different key types (RSA, ED25519)
-  - [ ] Key strength options
-  - [ ] Integration with existing SSH key management
+- [x] **SSH Key Management**
+  - [x] Better SSH key generation options
+  - [x] Support for different key types (RSA, ED25519)
+  - [x] Key strength options
+  - [x] Integration with existing SSH key management
 
 - [ ] **Credential Handling**
   - [ ] Secure handling of any passwords/tokens

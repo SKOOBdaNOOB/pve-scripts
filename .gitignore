@@ -1,1 +1,70 @@
-*.skb
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*~
+
+# Backup files
+*.old
+*.orig
+*.save
+
+# Shell history (if accidentally added)
+.bash_history
+.zsh_history
+
+# System files
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.code-workspace
+
+# Python virtual environments (if using any helper scripts)
+venv/
+.env
+__pycache__/
+*.py[cod]
+
+# Secrets and environment files
+*.env
+.env.*
+secrets.*
+
+# Archives
+*.tar
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Executables and compiled output
+*.out
+*.exe
+*.bin
+
+# Proxmox-specific files (customize if needed)
+*.qcow2
+*.img
+*.iso
+*.vma
+*.vzdump
+*.conf.bak
+
+# Node modules (if you're doing any JS/Node stuff)
+node_modules/
+
+# Local test/output files
+output/
+results/
+tmp/
+temp/
