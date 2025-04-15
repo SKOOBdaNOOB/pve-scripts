@@ -64,6 +64,7 @@ secrets.*
 node_modules/
 
 # Local test/output files
+.archives/
 output/
 results/
 tmp/
