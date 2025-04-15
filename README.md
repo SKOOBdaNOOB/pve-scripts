@@ -1,6 +1,7 @@
 # Linux Cloudinit VM Creation Scripts for Proxmox
 
-Inspired by the infamous [haos-vm.sh](https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/haos-vm.sh) in [@community-scripts](https://github.com/community-scripts/ProxmoxVE) **ProxmoxVE**  repo. Wanted something simple that could be replicated for all kinds of Linux distro's generic cloud images.
+Inspired by the infamous [haos-vm.sh](https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/haos-vm.sh) in [@community-scripts](https://github.com/community-scripts/ProxmoxVE) **ProxmoxVE**  repo.
+Wanted something simple that could be replicated for all kinds of Linux distro's generic cloud images.
 
 ## Features
 
