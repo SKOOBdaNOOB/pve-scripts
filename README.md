@@ -1,35 +1,35 @@
 # Rocky Linux VM Creation Script for Proxmox
 
-A simple, streamlined script for creating Rocky Linux VMs in Proxmox VE with cloud-init support. This script provides a straightforward way to deploy Rocky Linux cloud images with minimal effort.
+Hey there! This is a handy script for spinning up Rocky Linux VMs in Proxmox VE with cloud-init support. If you're looking to deploy Rocky Linux cloud images without the hassle, you've come to the right place!
 
 ## Features
 
-- **Simple Execution**: Run with a single command
-- **Default & Advanced Modes**: Choose between quick setup or detailed configuration
-- **Cloud-Init Integration**: Automatic configuration of user accounts, SSH keys, and networking
-- **EFI Support**: Properly configured EFI boot for modern compatibility
-- **Network Configuration**: Support for both DHCP and static IP addressing
-- **Storage Flexibility**: Works with various Proxmox storage types
+- **Run it and forget it** - Just one command to get things rolling
+- **Choose your adventure** - Quick setup or custom configuration, it's up to you
+- **Cloud-Init ready** - Sets up user accounts, SSH keys, and networking automatically
+- **Modern boot support** - Properly configured EFI boot so everything plays nice
+- **Flexible networking** - DHCP for simplicity or static IPs when you need them
+- **Storage that works** - Compatible with whatever Proxmox storage you've got handy
 
 ## Quick Start
 
 Run the script directly on your Proxmox server:
 
 ```bash
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/your-repo/main/rocky-vm.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/SKOOBdaNOOB/pve-scripts/main/rocky-vm.sh)"
 ```
 
 Or download and run locally:
 
 ```bash
-wget https://raw.githubusercontent.com/your-repo/main/rocky-vm.sh
+wget https://raw.githubusercontent.com/SKOOBdaNOOB/pve-scripts/main/rocky-vm.sh
 chmod +x rocky-vm.sh
 ./rocky-vm.sh
 ```
 
 ## Default Settings
 
-When using the default mode, the script will create a VM with:
+When you go with the default mode, you'll get a VM with:
 
 - Rocky Linux 9 cloud image
 - 2 CPU cores
@@ -41,7 +41,7 @@ When using the default mode, the script will create a VM with:
 
 ## Advanced Configuration
 
-The advanced mode allows you to customize:
+Want to customize things? The advanced mode lets you tweak:
 
 - VM ID
 - Machine type (i440fx/q35)
@@ -60,14 +60,15 @@ The advanced mode allows you to customize:
 
 ## Requirements
 
-- Proxmox VE 7.0+
-- Root privileges
-- Internet connection (to download the Rocky Linux cloud image)
-- Available storage in Proxmox
+You'll need:
+- Proxmox VE 7.0 or newer
+- Root access
+- Internet connection to grab the Rocky Linux cloud image
+- Some free storage space in Proxmox
 
 ## Storage Considerations
 
-The script automatically detects available storage pools and allows you to select where to store the VM. It handles different storage types appropriately, including:
+Don't worry about storage types - the script has you covered! It'll detect what you have available and handle the details for:
 
 - Directory storage
 - LVM
@@ -76,25 +77,25 @@ The script automatically detects available storage pools and allows you to selec
 
 ## Cloud-Init Configuration
 
-The script configures cloud-init for the VM, which allows for:
+The script takes care of cloud-init setup, so you can:
 
-- Setting the default username and password
-- Adding SSH keys for passwordless authentication
-- Configuring network settings (DHCP or static IP)
-- Setting DNS servers
+- Set your preferred username and password
+- Add your SSH keys for passwordless login
+- Configure networking just how you like it
+- Set up your DNS servers
 
 ## Troubleshooting
 
-If you encounter issues:
+Running into issues? Here are some quick fixes:
 
-1. Ensure you're running the script as root
-2. Verify your Proxmox server has internet access
-3. Check that you have sufficient storage space
-4. For network issues, verify your bridge configuration
+1. Make sure you're running as root
+2. Check that your Proxmox server can reach the internet
+3. Verify you've got enough storage space
+4. For network hiccups, double-check your bridge setup
 
 ## Extending the Script
 
-This script can be used as a base for creating other distribution-specific VM creation scripts. The core functionality can be adapted for Ubuntu, Debian, Fedora, or other cloud-init compatible images.
+Feel free to use this script as a starting point for other distros! The core functionality works great for Ubuntu, Debian, Fedora, or any other cloud-init compatible images.
 
 ## License
 
