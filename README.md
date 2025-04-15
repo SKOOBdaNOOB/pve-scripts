@@ -1,17 +1,16 @@
-# Rocky Linux VM Creation Script for Proxmox
+# Linux Cloudinit VM Creation Scripts for Proxmox
 
-Hey there! This is a handy script for spinning up Rocky Linux VMs in Proxmox VE with cloud-init support. If you're looking to deploy Rocky Linux cloud images without the hassle, you've come to the right place!
+This is a handy script for spinning up Rocky Linux VMs in Proxmox VE with cloud-init support. Inspired by the infamous [haos-vm.sh](https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/haos-vm.sh) in [@community-scripts](https://github.com/community-scripts/ProxmoxVE) **ProxmoxVE**  repo. Wanted something simple that could be replicated for all kinds of Linux distro's generic cloud images.
 
 ## Features
 
-- **Run it and forget it** - Just one command to get things rolling
-- **Choose your adventure** - Quick setup or custom configuration, it's up to you
 - **Cloud-Init ready** - Sets up user accounts, SSH keys, and networking automatically
+- **Run it and forget it** - Just one command to get things rolling
 - **Modern boot support** - Properly configured EFI boot so everything plays nice
 - **Flexible networking** - DHCP for simplicity or static IPs when you need them
 - **Storage that works** - Compatible with whatever Proxmox storage you've got handy
 
-## Quick Start
+## Quick Start (Rocky9 Example)
 
 Run the script directly on your Proxmox server:
 
@@ -95,8 +94,8 @@ Running into issues? Here are some quick fixes:
 
 ## Extending the Script
 
-Feel free to use this script as a starting point for other distros! The core functionality works great for Ubuntu, Debian, Fedora, or any other cloud-init compatible images.
+Feel free to use this script as a starting point for other distros! The core functionality works great for Ubuntu, Debian, Fedora, or any other cloud-init compatible images. And check out []
 
 ## License
 
-MIT License
+GNU GENERAL PUBLIC LICENSE
